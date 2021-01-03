@@ -6,7 +6,7 @@ Both the Python and Go versions of this project will complete puzzles 1 through 
 
 Sample output for the Go version is below:
 ```
-Puzzle   | Solved     | Duration      | Username | Password
+Puzzle   | Solved     | Duration      | Username | Next Password
 ==================================================================================
 Natas 0  | Solved     | 267.6149ms    | natas0   | THEPASSWORDWOULDGOHERE
 Natas 1  | Solved     | 270.3603ms    | natas1   | THEPASSWORDWOULDGOHERE
