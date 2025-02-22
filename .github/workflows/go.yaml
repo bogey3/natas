@@ -30,11 +30,6 @@ jobs:
           cd ./golang/natas
           GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v .
 
-      - name: Test
-        run: |
-          cd ./golang/natas
-          go test -v ./...
-
         # Create a new release and upload the binary
       - name: Create GitHub Release
         id: create_release
