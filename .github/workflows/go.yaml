@@ -21,10 +21,10 @@ jobs:
           go-version: '1.24'
 
       - name: Build Linux
-        run: GOOS=linux GOARCH=amd64 go build -o natas -ldflags "-w -s" -v ./...
+        run: GOOS=linux GOARCH=amd64 go build -o natas -ldflags "-w -s" -v ./golang/natas
 
       - name: Build Windows
-        run: GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v ./...
+        run: GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v ./golang/natas
 
       - name: Test
         run: go test -v ./...
