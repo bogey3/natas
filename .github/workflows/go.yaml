@@ -31,7 +31,9 @@ jobs:
           GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v .
 
       - name: Test
-        run: go test -v ./...
+        run: |
+          cd ./golang/natas
+          go test -v ./...
 
         # Create a new release and upload the binary
       - name: Create GitHub Release
@@ -47,6 +49,7 @@ jobs:
       # Upload the compiled binary to the release
       - name: Upload Linux Binary
         run: |
+          cd ./golang/natas
           VERSION="${GITHUB_REF_NAME}"
           RELEASE_ID="${{ steps.create_release.outputs.release_id }}"
           curl -i -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -56,6 +59,7 @@ jobs:
       # Upload Windows binary to the release
       - name: Upload Windows binary
         run: |
+          cd ./golang/natas
           VERSION="${GITHUB_REF_NAME}"
           RELEASE_ID="${{ steps.create_release.outputs.release_id }}"
           curl -i -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
