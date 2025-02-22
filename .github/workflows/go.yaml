@@ -22,12 +22,13 @@ jobs:
 
       - name: Build Linux
         run: |
-          pwd
-          ls -la
-          GOOS=linux GOARCH=amd64 go build -o natas -ldflags "-w -s" -v ./golang/natas
+          cd ./golang/natas
+          GOOS=linux GOARCH=amd64 go build -o natas -ldflags "-w -s" -v .
 
       - name: Build Windows
-        run: GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v ./golang/natas
+        run: |
+          cd ./golang/natas
+          GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v .
 
       - name: Test
         run: go test -v ./...
