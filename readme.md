@@ -2,7 +2,7 @@
 This project was created to learn more about Python, Go, and web application security.
 If you have not completed these challenges yourself, try them out manually first. You can find them here: https://overthewire.org/wargames/natas/
 
-Both the Python and Go versions of this project will complete puzzles 1 through 27.
+The Go versions of this project will complete puzzles 1 through 27. The Python version is unmaintained.
 
 Sample output for the Go version is below:
 ```
