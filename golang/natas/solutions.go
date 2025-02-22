@@ -170,7 +170,24 @@ func Init() {
 
 	//Natas11
 	Solutions = append(Solutions, func(username string, password string) string {
-		xorKey := []byte("qw8J")
+		req1, _ := http.NewRequest("GET", "http://natas11.natas.labs.overthewire.org/", nil)
+		req1.SetBasicAuth(username, password)
+		resp1, err1 := http.DefaultClient.Do(req1)
+		if err1 != nil {
+			panic("Could not get natas 11")
+		}
+
+		dataValue := resp1.Cookies()[0].Value
+
+		decodedData, err := base64.StdEncoding.DecodeString(dataValue)
+		selectedBytes := decodedData[33:37]
+		xorKey := []byte{}
+		for _, b := range selectedBytes {
+			xorKey = append(xorKey, b^0x66)
+		}
+
+		xorKey[0], xorKey[1], xorKey[2], xorKey[3] = xorKey[3], xorKey[0], xorKey[1], xorKey[2]
+
 		cookieData := []byte(`{"showpassword":"yes","bgcolor":"#ffffff"}`)
 		encryptedData := []byte{}
 		for i, b := range cookieData {
