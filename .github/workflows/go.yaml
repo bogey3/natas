@@ -1,0 +1,60 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on any new version tag (e.g., v1.0.0, v2.1.0, etc.)
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: Build Linux
+        run: GOOS=linux GOARCH=amd64 go build -o natas -ldflags "-w -s" -v ./...
+
+      - name: Build Windows
+        run: GOOS=windows GOARCH=amd64 go build -o natas.exe -ldflags "-w -s" -v ./...
+
+      - name: Test
+        run: go test -v ./...
+
+        # Create a new release and upload the binary
+      - name: Create GitHub Release
+        id: create_release
+        run: |
+          REPO="bogey3/natas"
+          VERSION="${GITHUB_REF_NAME}"
+          RESPONSE=$(curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"tag_name": "'"$VERSION"'", "name": "'"$VERSION"'", "body": "Release for version '"$VERSION"'"}' \
+            "https://api.github.com/repos/$REPO/releases")
+          echo "::set-output name=release_id::$(echo $RESPONSE | jq -r .id)"
+
+      # Upload the compiled binary to the release
+      - name: Upload Linux Binary
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          RELEASE_ID="${{ steps.create_release.outputs.release_id }}"
+          curl -i -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @natas \
+            "https://uploads.github.com/repos/bogey3/natas/releases/$RELEASE_ID/assets?name=natas"
+      # Upload Windows binary to the release
+      - name: Upload Windows binary
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          RELEASE_ID="${{ steps.create_release.outputs.release_id }}"
+          curl -i -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @natas.exe \
+            "https://uploads.github.com/repos/bogey3/natas/releases/$RELEASE_ID/assets?name=natas.exe"
